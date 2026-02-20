@@ -1,0 +1,26 @@
+{
+  "name": "bollywood_day",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Omkar-R-Mundhe/Bollywood_day#readme",
+  "bugs": {
+    "url": "https://github.com/Omkar-R-Mundhe/Bollywood_day/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Omkar-R-Mundhe/Bollywood_day.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "xlsx": "^0.18.5",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

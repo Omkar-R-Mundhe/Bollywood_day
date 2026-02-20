@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin – Bollywood Day 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --gold: #FFD700; --crimson: #C0152A; --orange: #FF6B00; --dark: #0D0005; --card: rgba(255,255,255,0.05); }
+    body { font-family: 'Poppins', sans-serif; background: var(--dark); color: #fff; min-height: 100vh; }
+    .bg { position: fixed; inset: 0; background: radial-gradient(ellipse at 20% 20%, #3a0008 0%, transparent 55%), radial-gradient(ellipse at 80% 80%, #2a1000 0%, transparent 55%), #0D0005; }
+
+    /* ── Login ── */
+    .login-wrap { position: relative; z-index: 1; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    .login-box {
+      background: var(--card); border: 1px solid rgba(255,215,0,0.2); border-radius: 24px;
+      padding: 48px 40px; width: 100%; max-width: 420px;
+      backdrop-filter: blur(12px); box-shadow: 0 0 60px rgba(192,21,42,0.2);
+      animation: fadeUp 0.7s ease both;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    .login-icon { text-align: center; font-size: 3rem; margin-bottom: 8px; }
+    .login-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; text-align: center; color: var(--gold); margin-bottom: 4px; }
+    .login-sub { text-align: center; font-size: 0.82rem; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px; }
+    .field { margin-bottom: 20px; }
+    .field label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.45); margin-bottom: 8px; }
+    .field input {
+      width: 100%; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,215,0,0.2);
+      border-radius: 12px; padding: 13px 16px; font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem; color: #fff; outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .field input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,215,0,0.1); }
+    .field input::placeholder { color: rgba(255,255,255,0.2); }
+    .btn-login {
+      width: 100%; padding: 14px; border: none; border-radius: 12px; cursor: pointer;
+      background: linear-gradient(135deg, #FFD700, #FF6B00, #C0152A);
+      background-size: 200% auto; font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      transition: background-position 0.4s, transform 0.2s; box-shadow: 0 4px 20px rgba(255,107,0,0.3);
+    }
+    .btn-login:hover { background-position: right center; transform: translateY(-1px); }
+    .btn-login:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .login-err { color: #ff6b6b; font-size: 0.82rem; text-align: center; margin-top: 12px; display: none; }
+
+    /* ── Dashboard ── */
+    #dashboard { display: none; position: relative; z-index: 1; min-height: 100vh; }
+    .topbar {
+      background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(255,215,0,0.15);
+      padding: 16px 32px; display: flex; align-items: center; justify-content: space-between;
+      backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 10;
+    }
+    .topbar-brand { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); }
+    .topbar-brand span { font-size: 0.75rem; font-family: 'Poppins', sans-serif; color: rgba(255,255,255,0.4); display: block; letter-spacing: 2px; text-transform: uppercase; }
+    .topbar-actions { display: flex; gap: 12px; align-items: center; }
+    .btn-sm {
+      padding: 9px 18px; border-radius: 10px; font-size: 0.82rem; font-family: 'Poppins', sans-serif;
+      font-weight: 600; cursor: pointer; transition: all 0.25s; border: none;
+    }
+    .btn-download { background: linear-gradient(135deg, var(--gold), var(--orange)); color: #000; }
+    .btn-download:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(255,215,0,0.3); }
+    .btn-logout { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.12); }
+    .btn-logout:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+    .main { padding: 32px; max-width: 1200px; margin: 0 auto; }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .stat-card {
+      background: var(--card); border: 1px solid rgba(255,215,0,0.12); border-radius: 16px;
+      padding: 20px 24px; text-align: center; transition: border-color 0.3s;
+    }
+    .stat-card:hover { border-color: rgba(255,215,0,0.35); }
+    .stat-icon { font-size: 2rem; margin-bottom: 6px; }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; color: var(--gold); }
+    .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+    /* Table */
+    .table-wrap { background: var(--card); border: 1px solid rgba(255,215,0,0.12); border-radius: 20px; overflow: hidden; }
+    .table-head {
+      padding: 20px 24px; display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(255,215,0,0.1);
+    }
+    .table-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); }
+    .search-box {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,215,0,0.15);
+      border-radius: 10px; padding: 8px 14px; color: #fff; font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem; outline: none; width: 220px;
+    }
+    .search-box:focus { border-color: rgba(255,215,0,0.4); }
+    .search-box::placeholder { color: rgba(255,255,255,0.25); }
+
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      padding: 14px 20px; text-align: left; font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 2px; color: rgba(255,255,255,0.35); border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-weight: 500;
+    }
+    tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.2s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(255,215,0,0.03); }
+    tbody td { padding: 14px 20px; font-size: 0.88rem; color: rgba(255,255,255,0.8); }
+    .id-badge {
+      background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.25);
+      color: var(--gold); padding: 3px 10px; border-radius: 20px; font-size: 0.78rem;
+      font-weight: 600; letter-spacing: 1px;
+    }
+    .act-chip {
+      padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+    }
+    .act-Dance { background: rgba(255,20,147,0.15); color: #ff69b4; border: 1px solid rgba(255,20,147,0.25); }
+    .act-Singing { background: rgba(255,215,0,0.12); color: var(--gold); border: 1px solid rgba(255,215,0,0.25); }
+    .act-Acting { background: rgba(255,107,0,0.15); color: #ff8c42; border: 1px solid rgba(255,107,0,0.25); }
+
+    .empty-state { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.3); }
+    .empty-state .e-icon { font-size: 3rem; margin-bottom: 12px; }
+    .loading { text-align: center; padding: 60px; color: rgba(255,255,255,0.4); }
+
+    @media (max-width: 700px) {
+      .topbar { padding: 14px 16px; }
+      .main { padding: 20px 16px; }
+      table { font-size: 0.8rem; }
+      thead th, tbody td { padding: 10px 12px; }
+      .search-box { width: 140px; }
+    }
+  </style>
+</head>
+<body>
+<div class="bg"></div>
+
+<!-- Login -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-box">
+    <div class="login-icon">🔐</div>
+    <div class="login-title">Organiser Login</div>
+    <div class="login-sub">Bollywood Day 2025 · Admin</div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="passwordInput" placeholder="Enter admin password" onkeydown="if(event.key==='Enter') doLogin()"/>
+    </div>
+    <button class="btn-login" id="loginBtn" onclick="doLogin()">🎬 Enter Dashboard</button>
+    <div class="login-err" id="loginErr">❌ Invalid password. Try again.</div>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard">
+  <div class="topbar">
+    <div class="topbar-brand">
+      🎬 Bollywood Day 2025
+      <span>Organiser Dashboard</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn-sm btn-download" onclick="downloadExcel()">⬇ Download Excel</button>
+      <button class="btn-sm btn-logout" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-num" id="totalCount">—</div>
+        <div class="stat-label">Total Registered</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💃</div>
+        <div class="stat-num" id="danceCount">—</div>
+        <div class="stat-label">Dance</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎤</div>
+        <div class="stat-num" id="singingCount">—</div>
+        <div class="stat-label">Singing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎭</div>
+        <div class="stat-num" id="actingCount">—</div>
+        <div class="stat-label">Acting</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-head">
+        <div class="table-title">All Registrations</div>
+        <input class="search-box" placeholder="🔍 Search name / email…" oninput="filterTable(this.value)"/>
+      </div>
+      <div id="tableContainer"><div class="loading">Loading registrations…</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  let token = sessionStorage.getItem('bld_token');
+  let allRegs = [];
+
+  // Auto-login if token saved
+  if (token) showDashboard();
+
+  async function doLogin() {
+    const pw = document.getElementById('passwordInput').value;
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true; btn.textContent = 'Verifying…';
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pw })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error();
+      token = data.token;
+      sessionStorage.setItem('bld_token', token);
+      showDashboard();
+    } catch {
+      document.getElementById('loginErr').style.display = 'block';
+      btn.disabled = false; btn.textContent = '🎬 Enter Dashboard';
+    }
+  }
+
+  function showDashboard() {
+    document.getElementById('loginWrap').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadRegistrations();
+  }
+
+  function logout() {
+    sessionStorage.removeItem('bld_token');
+    token = null;
+    document.getElementById('loginWrap').style.display = 'flex';
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('passwordInput').value = '';
+    document.getElementById('loginErr').style.display = 'none';
+  }
+
+  async function loadRegistrations() {
+    try {
+      const res = await fetch('/api/admin/registrations', { headers: { Authorization: 'Bearer ' + token } });
+      if (res.status === 401) { logout(); return; }
+      const data = await res.json();
+      allRegs = data.registrations;
+      updateStats(allRegs);
+      renderTable(allRegs);
+    } catch {
+      document.getElementById('tableContainer').innerHTML = '<div class="empty-state"><div class="e-icon">⚠️</div>Failed to load registrations.</div>';
+    }
+  }
+
+  function updateStats(regs) {
+    document.getElementById('totalCount').textContent = regs.length;
+    document.getElementById('danceCount').textContent = regs.filter(r => r.act === 'Dance').length;
+    document.getElementById('singingCount').textContent = regs.filter(r => r.act === 'Singing').length;
+    document.getElementById('actingCount').textContent = regs.filter(r => r.act === 'Acting').length;
+  }
+
+  function renderTable(regs) {
+    if (!regs.length) {
+      document.getElementById('tableContainer').innerHTML = '<div class="empty-state"><div class="e-icon">🎬</div>No registrations yet. Share the link!</div>';
+      return;
+    }
+    const rows = regs.map(r => `
+      <tr>
+        <td><span class="id-badge">${r.id || '—'}</span></td>
+        <td>${r.name || '—'}</td>
+        <td>${r.email || '—'}</td>
+        <td>${r.phone || '—'}</td>
+        <td><span class="act-chip act-${r.act}">${r.act || '—'}</span></td>
+        <td style="color:rgba(255,255,255,0.4);font-size:0.8rem">${r.timestamp || '—'}</td>
+      </tr>`).join('');
+    document.getElementById('tableContainer').innerHTML = `
+      <table>
+        <thead><tr><th>Reg ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Act</th><th>Registered At</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  function filterTable(q) {
+    const filtered = allRegs.filter(r =>
+      (r.name || '').toLowerCase().includes(q.toLowerCase()) ||
+      (r.email || '').toLowerCase().includes(q.toLowerCase()) ||
+      (r.id || '').toLowerCase().includes(q.toLowerCase())
+    );
+    renderTable(filtered);
+  }
+
+  async function downloadExcel() {
+    const res = await fetch('/api/admin/download', { headers: { Authorization: 'Bearer ' + token } });
+    if (res.status === 401) { logout(); return; }
+    const blob = await res.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'bollywood-day-registrations.xlsx';
+    a.click();
+  }
+
+  // Refresh every 30s
+  setInterval(() => { if (token) loadRegistrations(); }, 30000);
+</script>
+</body>
+</html>
