@@ -20,7 +20,7 @@ app.get('/admin', (req, res) => {
 });
 
 // ── Config ──────────────────────────────────────────────
-const JWT_SECRET = process.env.JWT_SECRET || 'bollywood-secret-key-2025';
+const JWT_SECRET = process.env.JWT_SECRET || 'bollywood-secret-key-2026';
 const ADMIN_PASSWORD_HASH = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'BollywoodAdmin@2025', 10);
 const EXCEL_FILE = path.join(__dirname, 'data', 'registrations.xlsx');
 
