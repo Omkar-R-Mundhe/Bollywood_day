@@ -16,7 +16,7 @@ app.get('/admin', (req, res) => res.redirect('/admin.html'));
 
 // ── Config ──────────────────────────────────────────────────────────────────
 const JWT_SECRET = process.env.JWT_SECRET || 'bollywood-secret-key-2026';
-const ADMIN_PASSWORD_HASH = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'BollywoodAdmin@2026', 10);
+const ADMIN_PASSWORD_HASH = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'BollywoodAdmin@2025', 10);
 
 // ── Database Setup ───────────────────────────────────────────────────────────
 // SQLite file stored in /data folder so it persists on Railway/Render volumes
@@ -119,11 +119,11 @@ app.get('/api/admin/download', authRequired, (req, res) => {
 
   const wb = xlsx.utils.book_new();
   const wsData = [
-    ['Registration ID', 'Full Name', 'Phone', 'Act', 'Registered At'],
-    ...registrations.map(r => [r.reg_id, r.name, r.phone, r.act, r.registered_at])
+    ['Registration ID', 'Full Name', 'Phone', 'Act'],
+    ...registrations.map(r => [r.reg_id, r.name, r.phone, r.act])
   ];
   const ws = xlsx.utils.aoa_to_sheet(wsData);
-  ws['!cols'] = [{ wch: 16 }, { wch: 28 }, { wch: 18 }, { wch: 12 }, { wch: 26 }];
+  ws['!cols'] = [{ wch: 16 }, { wch: 28 }, { wch: 18 }, { wch: 14 }];
   xlsx.utils.book_append_sheet(wb, ws, 'Registrations');
 
   const buffer = xlsx.write(wb, { type: 'buffer', bookType: 'xlsx' });
