@@ -1,343 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bollywood Day 2026 – Register Now</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --gold: #FFD700;
-      --deep-gold: #C9980A;
-      --crimson: #C0152A;
-      --deep-red: #7B0D1E;
-      --orange: #FF6B00;
-      --pink: #FF1493;
-      --dark: #0D0005;
-      --card-bg: rgba(255,255,255,0.04);
+      --gold: #FFD700; --crimson: #C0152A; --orange: #FF6B00;
+      --pink: #FF1493; --dark: #0D0005;
     }
+    body { font-family: 'Poppins', sans-serif; background: var(--dark); color: #fff; min-height: 100vh; overflow-x: hidden; }
 
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--dark);
-      color: #fff;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* ── Animated background ── */
     .bg-layer {
       position: fixed; inset: 0; z-index: 0;
       background: radial-gradient(ellipse at 20% 20%, #5c0010 0%, transparent 55%),
                   radial-gradient(ellipse at 80% 80%, #3a1a00 0%, transparent 55%),
-                  radial-gradient(ellipse at 50% 50%, #1a0030 0%, transparent 70%),
-                  #0D0005;
+                  radial-gradient(ellipse at 50% 50%, #1a0030 0%, transparent 70%), #0D0005;
     }
-
-    .sparkles {
-      position: fixed; inset: 0; z-index: 1; pointer-events: none;
-      overflow: hidden;
-    }
+    .sparkles { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
     .sparkle {
-      position: absolute;
-      width: 3px; height: 3px;
-      border-radius: 50%;
-      background: var(--gold);
-      animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s);
-      opacity: 0;
+      position: absolute; border-radius: 50%;
+      animation: twinkle var(--dur, 3s) ease-in-out infinite var(--delay, 0s); opacity: 0;
     }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0; transform: scale(0.5); }
-      50% { opacity: 1; transform: scale(1.5); }
-    }
+    @keyframes twinkle { 0%,100%{opacity:0;transform:scale(0.5)} 50%{opacity:1;transform:scale(1.5)} }
 
     .diyas {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 1;
-      height: 80px;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 1; height: 80px;
       background: linear-gradient(to top, rgba(255,107,0,0.15), transparent);
       display: flex; align-items: flex-end; justify-content: center; gap: 30px;
-      padding-bottom: 10px;
-      pointer-events: none;
+      padding-bottom: 10px; pointer-events: none;
     }
     .diya { font-size: 1.6rem; animation: flicker 1.5s ease-in-out infinite; }
     .diya:nth-child(even) { animation-delay: 0.5s; }
     @keyframes flicker { 0%,100%{transform:scale(1) translateY(0)} 50%{transform:scale(1.1) translateY(-3px)} }
 
-    /* ── Main wrapper ── */
-    .wrapper {
-      position: relative; z-index: 2;
-      max-width: 700px; margin: 0 auto;
-      padding: 40px 20px 120px;
-    }
+    .wrapper { position: relative; z-index: 2; max-width: 680px; margin: 0 auto; padding: 40px 20px 120px; }
 
-    /* ── Header ── */
     header { text-align: center; margin-bottom: 50px; }
-
-    .top-decor {
-      font-size: 2.2rem; letter-spacing: 12px;
-      animation: pulse-gold 2s ease-in-out infinite;
-    }
+    .top-decor { font-size: 2.2rem; letter-spacing: 12px; animation: pulse-gold 2s ease-in-out infinite; }
     @keyframes pulse-gold { 0%,100%{color:var(--gold)} 50%{color:var(--orange)} }
-
     h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.8rem, 8vw, 5rem);
-      font-weight: 900;
-      line-height: 1.05;
+      font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 900; line-height: 1.05;
       background: linear-gradient(135deg, #FFD700 0%, #FF6B00 40%, #FF1493 70%, #FFD700 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: shimmer 3s linear infinite;
-      background-size: 200% auto;
-      margin: 10px 0 6px;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      animation: shimmer 3s linear infinite; background-size: 200% auto; margin: 10px 0 6px;
     }
     @keyframes shimmer { to { background-position: 200% center; } }
+    .subtitle { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.15rem; color: rgba(255,215,0,0.75); letter-spacing: 1px; }
+    .divider { margin: 18px auto; width: 200px; height: 2px; background: linear-gradient(to right, transparent, var(--gold), var(--crimson), var(--gold), transparent); border: none; }
+    .tagline { font-size: 0.9rem; color: rgba(255,255,255,0.55); letter-spacing: 3px; text-transform: uppercase; }
 
-    .subtitle {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 1.15rem;
-      color: rgba(255,215,0,0.75);
-      letter-spacing: 1px;
-    }
-
-    .divider {
-      margin: 18px auto;
-      width: 200px; height: 2px;
-      background: linear-gradient(to right, transparent, var(--gold), var(--crimson), var(--gold), transparent);
-      border: none;
-    }
-
-    .tagline {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-
-    /* ── Card ── */
     .card {
-      background: var(--card-bg);
-      border: 1px solid rgba(255,215,0,0.18);
-      border-radius: 24px;
-      padding: 40px 36px;
-      backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,215,0,0.18);
+      border-radius: 24px; padding: 40px 36px; backdrop-filter: blur(12px);
       box-shadow: 0 0 60px rgba(192,21,42,0.2), 0 0 120px rgba(255,215,0,0.05);
       animation: fadeUp 0.8s ease both;
     }
     @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
     .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--gold);
-      margin-bottom: 28px;
-      display: flex; align-items: center; gap: 10px;
+      font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold);
+      margin-bottom: 28px; display: flex; align-items: center; gap: 10px;
     }
     .card-title::before, .card-title::after { content:''; flex:1; height:1px; background:linear-gradient(to right, transparent, rgba(255,215,0,0.4)); }
     .card-title::after { background:linear-gradient(to left, transparent, rgba(255,215,0,0.4)); }
 
-    /* ── Act Selector ── */
-    .acts-label {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 14px;
-    }
-
-    .acts {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-bottom: 28px;
-    }
-
+    .acts-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.5); margin-bottom: 14px; }
+    .acts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 32px; }
     .act-btn {
-      cursor: pointer;
-      border: 2px solid rgba(255,215,0,0.2);
-      border-radius: 16px;
-      padding: 20px 10px;
-      text-align: center;
-      background: rgba(255,255,255,0.03);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      cursor: pointer; border: 2px solid rgba(255,215,0,0.2); border-radius: 16px;
+      padding: 22px 10px; text-align: center; background: rgba(255,255,255,0.03);
+      transition: all 0.3s ease; position: relative; overflow: hidden; user-select: none;
     }
     .act-btn::before {
-      content: '';
-      position: absolute; inset: 0;
+      content: ''; position: absolute; inset: 0;
       background: linear-gradient(135deg, var(--crimson), var(--orange));
-      opacity: 0; transition: opacity 0.3s;
-      border-radius: 14px;
+      opacity: 0; transition: opacity 0.3s; border-radius: 14px;
     }
+    .act-btn:hover { border-color: rgba(255,215,0,0.45); }
     .act-btn:hover::before { opacity: 0.15; }
-    .act-btn.selected { border-color: var(--gold); }
+    .act-btn.selected { border-color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.15); }
     .act-btn.selected::before { opacity: 0.25; }
     .act-btn.selected .act-name { color: var(--gold); }
-
-    .act-emoji { font-size: 2.4rem; display: block; margin-bottom: 8px; position: relative; z-index: 1; }
-    .act-name { font-size: 0.9rem; font-weight: 600; letter-spacing: 1px; position: relative; z-index: 1; text-transform: uppercase; transition: color 0.3s; }
-
-    .check-mark {
-      position: absolute; top: 8px; right: 10px;
-      color: var(--gold); font-size: 1rem; z-index: 2;
-      opacity: 0; transition: opacity 0.3s;
-    }
+    .act-emoji { font-size: 2.6rem; display: block; margin-bottom: 10px; position: relative; z-index: 1; }
+    .act-name { font-size: 0.88rem; font-weight: 600; letter-spacing: 1px; position: relative; z-index: 1; text-transform: uppercase; transition: color 0.3s; }
+    .check-mark { position: absolute; top: 8px; right: 10px; color: var(--gold); font-size: 1rem; z-index: 2; opacity: 0; transition: opacity 0.3s; }
     .act-btn.selected .check-mark { opacity: 1; }
 
-    /* ── Form fields ── */
     .field { margin-bottom: 22px; }
-    .field label {
-      display: block;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 8px;
-    }
+    .field label { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.5); margin-bottom: 8px; }
     .field input {
-      width: 100%;
-      background: rgba(255,255,255,0.06);
-      border: 1.5px solid rgba(255,215,0,0.2);
-      border-radius: 12px;
-      padding: 14px 18px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1rem;
-      color: #fff;
-      outline: none;
-      transition: border-color 0.3s, box-shadow 0.3s;
+      width: 100%; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,215,0,0.2);
+      border-radius: 12px; padding: 15px 18px; font-family: 'Poppins', sans-serif;
+      font-size: 1rem; color: #fff; outline: none; transition: border-color 0.3s, box-shadow 0.3s;
     }
     .field input::placeholder { color: rgba(255,255,255,0.25); }
-    .field input:focus {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(255,215,0,0.1);
-    }
+    .field input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,215,0,0.1); }
 
-    /* ── Submit button ── */
     .btn-register {
-      width: 100%;
-      padding: 18px;
-      border: none;
-      border-radius: 14px;
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      cursor: pointer;
+      width: 100%; padding: 18px; border: none; border-radius: 14px;
+      font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700;
+      letter-spacing: 1px; cursor: pointer;
       background: linear-gradient(135deg, #FFD700, #FF6B00, #C0152A);
-      background-size: 200% auto;
-      color: #fff;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      background-size: 200% auto; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.4);
       transition: background-position 0.4s, transform 0.2s, box-shadow 0.3s;
-      box-shadow: 0 4px 24px rgba(255,107,0,0.35);
-      margin-top: 8px;
-      position: relative; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(255,107,0,0.35); margin-top: 8px;
     }
-    .btn-register:hover {
-      background-position: right center;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(255,107,0,0.5);
-    }
+    .btn-register:hover { background-position: right center; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,107,0,0.5); }
     .btn-register:active { transform: translateY(0); }
     .btn-register:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-    /* ── Error ── */
     .error-msg {
-      color: #ff6b6b;
-      font-size: 0.82rem;
-      margin-top: 12px;
-      display: none;
-      text-align: center;
+      color: #ff6b6b; font-size: 0.83rem; margin-top: 14px; display: none;
+      text-align: center; padding: 12px 16px; background: rgba(255,107,107,0.1);
+      border: 1px solid rgba(255,107,107,0.2); border-radius: 10px;
     }
 
-    /* ── Success Screen ── */
-    .success-screen {
-      display: none;
-      text-align: center;
-      animation: fadeUp 0.7s ease both;
-    }
+    /* ── Success ── */
+    .success-screen { display: none; text-align: center; animation: fadeUp 0.7s ease both; }
     .success-screen.show { display: block; }
     .card.hide { display: none; }
-
-    .success-icon { font-size: 5rem; margin-bottom: 16px; animation: bounce 1s ease infinite alternate; }
+    .success-icon { font-size: 5rem; margin-bottom: 16px; animation: bounce 1s ease infinite alternate; display: block; }
     @keyframes bounce { from{transform:translateY(0)} to{transform:translateY(-12px)} }
-
     .success-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.4rem;
-      font-weight: 900;
+      font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900;
       background: linear-gradient(135deg, #FFD700, #FF6B00);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 12px;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 12px;
     }
-
-    .success-sub {
-      color: rgba(255,255,255,0.65);
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 30px;
-    }
-
+    .success-sub { color: rgba(255,255,255,0.65); font-size: 1rem; line-height: 1.7; margin-bottom: 30px; }
     .reg-id-box {
-      background: rgba(255,215,0,0.07);
-      border: 1.5px solid rgba(255,215,0,0.35);
-      border-radius: 16px;
-      padding: 20px 28px;
-      display: inline-block;
-      margin-bottom: 30px;
+      background: rgba(255,215,0,0.07); border: 1.5px solid rgba(255,215,0,0.35);
+      border-radius: 16px; padding: 22px 32px; display: inline-block; margin-bottom: 28px;
     }
-    .reg-id-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 6px;
-    }
-    .reg-id-value {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 4px;
-    }
-
-    .performer-info {
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 8px;
-    }
+    .reg-id-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: rgba(255,255,255,0.4); margin-bottom: 6px; }
+    .reg-id-value { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold); letter-spacing: 4px; }
+    .performer-info { font-size: 0.95rem; color: rgba(255,255,255,0.7); margin-bottom: 8px; }
     .performer-info span { color: var(--gold); font-weight: 600; }
-
     .btn-another {
-      background: transparent;
-      border: 1.5px solid rgba(255,215,0,0.4);
-      color: var(--gold);
-      padding: 12px 32px;
-      border-radius: 12px;
-      font-family: 'Poppins', sans-serif;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-top: 10px;
+      background: transparent; border: 1.5px solid rgba(255,215,0,0.4); color: var(--gold);
+      padding: 13px 34px; border-radius: 12px; font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem; cursor: pointer; transition: all 0.3s; margin-top: 12px;
     }
     .btn-another:hover { background: rgba(255,215,0,0.1); border-color: var(--gold); }
 
     @media (max-width: 500px) {
-      .card { padding: 28px 20px; }
+      .card { padding: 28px 18px; }
       .acts { gap: 10px; }
       .act-emoji { font-size: 2rem; }
     }
   </style>
 </head>
 <body>
-
 <div class="bg-layer"></div>
 <div class="sparkles" id="sparkles"></div>
 <div class="diyas">
@@ -352,13 +168,11 @@
     <h1>Bollywood Day</h1>
     <p class="subtitle">An Evening of Stars, Songs &amp; Stories</p>
     <hr class="divider"/>
-    <p class="tagline">Register Your Act · 2025</p>
+    <p class="tagline">Register Your Act · 2026</p>
   </header>
 
-  <!-- Registration Card -->
   <div class="card" id="regCard">
     <div class="card-title">Choose Your Act</div>
-
     <p class="acts-label">Select a category</p>
     <div class="acts">
       <div class="act-btn" data-act="Dance" onclick="selectAct(this)">
@@ -378,67 +192,55 @@
       </div>
     </div>
 
-    <div class="card-title" style="font-size:1.2rem; margin-bottom:20px;">Your Details</div>
+    <div class="card-title" style="font-size:1.2rem; margin-bottom:22px;">Your Details</div>
 
     <div class="field">
       <label>Full Name</label>
       <input type="text" id="fullName" placeholder="Enter your full name"/>
     </div>
     <div class="field">
-      <label>Email Address</label>
-      <input type="email" id="email" placeholder="you@example.com"/>
-    </div>
-    <div class="field">
       <label>Phone Number</label>
       <input type="tel" id="phone" placeholder="+91 98765 43210"/>
     </div>
 
-    <button class="btn-register" onclick="register()">🌟 Register Now 🌟</button>
-    <div class="error-msg" id="errMsg">Please fill all fields and select an act.</div>
+    <button class="btn-register" id="regBtn" onclick="register()">🌟 Register Now 🌟</button>
+    <div class="error-msg" id="errMsg"></div>
   </div>
 
-  <!-- Success Screen -->
   <div class="success-screen" id="successScreen">
-    <div class="success-icon">🎉</div>
+    <span class="success-icon">🎉</span>
     <div class="success-title">You're In, Star!</div>
     <p class="success-sub">
-      Your registration for <strong style="color:#fff">Bollywood Day 2025</strong> has been confirmed.<br/>
-      Save your Registration ID below — you'll need it at the venue!
+      Your registration for <strong style="color:#fff">Bollywood Day 2026</strong> has been confirmed.<br/>
+      Save your Registration ID — you'll need it at the venue!
     </p>
-
     <div class="reg-id-box">
       <div class="reg-id-label">Your Registration ID</div>
       <div class="reg-id-value" id="regIdDisplay">BLD-0000</div>
     </div>
-
     <p class="performer-info">Name: <span id="dispName">—</span></p>
-    <p class="performer-info">Act: <span id="dispAct">—</span></p>
-    <p class="performer-info" style="margin-bottom:0">Email: <span id="dispEmail">—</span></p>
-
+    <p class="performer-info" style="margin-bottom:0">Act: <span id="dispAct">—</span></p>
     <br/>
     <button class="btn-another" onclick="resetForm()">Register Another Performer</button>
   </div>
 </div>
 
 <script>
-  // ── Sparkles ──
-  const container = document.getElementById('sparkles');
+  // Sparkles
+  const sc = document.getElementById('sparkles');
   for (let i = 0; i < 60; i++) {
     const s = document.createElement('div');
     s.className = 'sparkle';
-    s.style.cssText = `
-      left:${Math.random()*100}%;
-      top:${Math.random()*100}%;
-      --dur:${2 + Math.random()*4}s;
-      --delay:${Math.random()*5}s;
-      width:${Math.random() > 0.7 ? 4 : 2}px;
-      height:${Math.random() > 0.7 ? 4 : 2}px;
-      background:${['#FFD700','#FF6B00','#FF1493','#fff'][Math.floor(Math.random()*4)]};
-    `;
-    container.appendChild(s);
+    const size = Math.random() > 0.7 ? 4 : 2;
+    s.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;width:${size}px;height:${size}px;--dur:${2+Math.random()*4}s;--delay:${Math.random()*5}s;background:${['#FFD700','#FF6B00','#FF1493','#fff'][Math.floor(Math.random()*4)]};`;
+    sc.appendChild(s);
   }
 
-  // ── Act selection ──
+  // Confetti keyframes
+  const cs = document.createElement('style');
+  cs.textContent = `@keyframes conffall{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(720deg);opacity:0}}`;
+  document.head.appendChild(cs);
+
   let selectedAct = null;
   function selectAct(el) {
     document.querySelectorAll('.act-btn').forEach(b => b.classList.remove('selected'));
@@ -446,130 +248,61 @@
     selectedAct = el.dataset.act;
   }
 
-  // ── Local storage ──
-  function getRegistrations() {
-    return JSON.parse(localStorage.getItem('bollywoodRegs') || '[]');
-  }
-  function saveRegistrations(regs) {
-    localStorage.setItem('bollywoodRegs', JSON.stringify(regs));
-  }
-  function generateId(regs) {
-    const num = String(regs.length + 1).padStart(4, '0');
-    return `BLD-${num}`;
-  }
-
-  // ── Register ──
   async function register() {
     const name  = document.getElementById('fullName').value.trim();
-    const email = document.getElementById('email').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const err   = document.getElementById('errMsg');
-    const btn = document.querySelector('.btn-register');
+    const btn   = document.getElementById('regBtn');
 
-    if (!name || !email || !phone || !selectedAct) {
-      err.textContent = 'Please fill all fields and select an act.';
-      err.style.display = 'block';
-      return;
+    if (!name || !phone || !selectedAct) {
+      err.textContent = '⚠️ Please fill all fields and select an act.';
+      err.style.display = 'block'; return;
     }
     err.style.display = 'none';
+    btn.disabled = true; btn.textContent = 'Registering…';
 
-    btn.disabled = true;
-    btn.textContent = 'Registering...';
-
-    let id;
     try {
       const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, act: selectedAct })
+        body: JSON.stringify({ name, phone, act: selectedAct })
       });
-
       const data = await res.json();
-      if (!res.ok || !data.success) {
-        throw new Error(data.error || 'Registration failed');
-      }
-      id = data.registrationId;
+      if (!res.ok) throw new Error(data.error || 'Registration failed');
+
+      document.getElementById('regCard').classList.add('hide');
+      document.getElementById('successScreen').classList.add('show');
+      document.getElementById('regIdDisplay').textContent = data.registrationId;
+      document.getElementById('dispName').textContent = name;
+      document.getElementById('dispAct').textContent = selectedAct + ' ' + {Dance:'💃',Singing:'🎤',Acting:'🎭'}[selectedAct];
+      confettiBurst();
     } catch (e) {
-      err.textContent = e.message || 'Registration failed. Please try again.';
+      err.textContent = '❌ ' + e.message;
       err.style.display = 'block';
-      btn.disabled = false;
-      btn.textContent = '🌟 Register Now 🌟';
-      return;
+      btn.disabled = false; btn.textContent = '🌟 Register Now 🌟';
     }
-
-    // Show success
-    document.getElementById('regCard').classList.add('hide');
-    const ss = document.getElementById('successScreen');
-    ss.classList.add('show');
-    document.getElementById('regIdDisplay').textContent = id;
-    document.getElementById('dispName').textContent  = name;
-    document.getElementById('dispAct').textContent   = selectedAct + ' ' + {Dance:'💃',Singing:'🎤',Acting:'🎭'}[selectedAct];
-    document.getElementById('dispEmail').textContent = email;
-
-    // Confetti burst
-    confettiBurst();
-
-    btn.disabled = false;
-    btn.textContent = '🌟 Register Now 🌟';
   }
 
-  // ── Reset ──
   function resetForm() {
     document.getElementById('fullName').value = '';
-    document.getElementById('email').value = '';
     document.getElementById('phone').value = '';
     selectedAct = null;
     document.querySelectorAll('.act-btn').forEach(b => b.classList.remove('selected'));
+    document.getElementById('regBtn').disabled = false;
+    document.getElementById('regBtn').textContent = '🌟 Register Now 🌟';
     document.getElementById('successScreen').classList.remove('show');
     document.getElementById('regCard').classList.remove('hide');
   }
 
-  // ── Simple confetti ──
   function confettiBurst() {
     const colors = ['#FFD700','#FF6B00','#FF1493','#C0152A','#fff'];
-    for (let i = 0; i < 70; i++) {
+    for (let i = 0; i < 80; i++) {
       const el = document.createElement('div');
       const size = 6 + Math.random() * 8;
-      el.style.cssText = `
-        position:fixed; z-index:999;
-        left:${30 + Math.random()*40}%;
-        top:30%;
-        width:${size}px; height:${size}px;
-        background:${colors[Math.floor(Math.random()*colors.length)]};
-        border-radius:${Math.random()>0.5?'50%':'2px'};
-        pointer-events:none;
-        animation: conffall ${1.5 + Math.random()*2}s ease forwards;
-        --dx:${(Math.random()-0.5)*400}px;
-        --dy:${200 + Math.random()*400}px;
-      `;
+      el.style.cssText = `position:fixed;z-index:999;left:${30+Math.random()*40}%;top:30%;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>0.5?'50%':'2px'};pointer-events:none;animation:conffall ${1.5+Math.random()*2}s ease forwards;--dx:${(Math.random()-0.5)*400}px;--dy:${200+Math.random()*400}px;`;
       document.body.appendChild(el);
       setTimeout(() => el.remove(), 3500);
     }
-  }
-  const confStyle = document.createElement('style');
-  confStyle.textContent = `@keyframes conffall {
-    0%{transform:translate(0,0) rotate(0deg); opacity:1}
-    100%{transform:translate(var(--dx),var(--dy)) rotate(720deg); opacity:0}
-  }`;
-  document.head.appendChild(confStyle);
-
-  // ── Download Excel (CSV) ──
-  // Keyboard shortcut Ctrl+Shift+E to export
-  document.addEventListener('keydown', e => {
-    if (e.ctrlKey && e.shiftKey && e.key === 'E') exportCSV();
-  });
-
-  function exportCSV() {
-    const regs = getRegistrations();
-    if (!regs.length) { alert('No registrations yet!'); return; }
-    const header = ['Registration ID','Name','Email','Phone','Act','Timestamp'];
-    const rows = regs.map(r => [r.id, r.name, r.email, r.phone, r.act, r.timestamp]);
-    const csv = [header, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'bollywood-day-registrations.csv';
-    a.click();
   }
 </script>
 </body>

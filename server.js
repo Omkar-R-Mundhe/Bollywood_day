@@ -1,4 +1,5 @@
 const express = require('express');
+const Database = require('better-sqlite3');
 const xlsx = require('xlsx');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -7,53 +8,42 @@ const fs = require('fs');
 
 const app = express();
 app.use(express.json());
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
 
-app.get('/admin.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'admin.html'));
-});
+// Serve static files
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.get('/admin.html', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+app.get('/admin', (req, res) => res.redirect('/admin.html'));
 
-app.get('/admin', (req, res) => {
-  res.redirect('/admin.html');
-});
-
-// ── Config ──────────────────────────────────────────────
+// ── Config ──────────────────────────────────────────────────────────────────
 const JWT_SECRET = process.env.JWT_SECRET || 'bollywood-secret-key-2026';
-const ADMIN_PASSWORD_HASH = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'BollywoodAdmin@2025', 10);
-const EXCEL_FILE = path.join(__dirname, 'data', 'registrations.xlsx');
+const ADMIN_PASSWORD_HASH = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'BollywoodAdmin@2026', 10);
 
-// Ensure data directory and Excel file exist
-if (!fs.existsSync(path.join(__dirname, 'data'))) {
-  fs.mkdirSync(path.join(__dirname, 'data'));
+// ── Database Setup ───────────────────────────────────────────────────────────
+// SQLite file stored in /data folder so it persists on Railway/Render volumes
+const DATA_DIR = path.join(__dirname, 'data');
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+
+const db = new Database(path.join(DATA_DIR, 'registrations.db'));
+
+// Create table if not exists
+db.exec(`
+  CREATE TABLE IF NOT EXISTS registrations (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    reg_id      TEXT NOT NULL UNIQUE,
+    name        TEXT NOT NULL,
+    phone       TEXT NOT NULL,
+    act         TEXT NOT NULL,
+    registered_at TEXT NOT NULL
+  )
+`);
+
+// Helper: generate next BLD-XXXX id
+function generateRegId() {
+  const row = db.prepare('SELECT COUNT(*) as cnt FROM registrations').get();
+  return `BLD-${String(row.cnt + 1).padStart(4, '0')}`;
 }
 
-function getWorkbook() {
-  if (fs.existsSync(EXCEL_FILE)) {
-    return xlsx.readFile(EXCEL_FILE);
-  }
-  const wb = xlsx.utils.book_new();
-  const ws = xlsx.utils.aoa_to_sheet([
-    ['Registration ID', 'Full Name', 'Email', 'Phone', 'Act', 'Registered At']
-  ]);
-
-  // Column widths
-  ws['!cols'] = [
-    { wch: 16 }, { wch: 24 }, { wch: 30 },
-    { wch: 18 }, { wch: 12 }, { wch: 24 }
-  ];
-  xlsx.utils.book_append_sheet(wb, ws, 'Registrations');
-  xlsx.writeFile(wb, EXCEL_FILE);
-  return wb;
-}
-
-function getNextId(ws) {
-  const data = xlsx.utils.sheet_to_json(ws, { header: 1 });
-  return `BLD-${String(data.length).padStart(4, '0')}`;
-}
-
-// ── Auth middleware ──────────────────────────────────────
+// ── Auth Middleware ──────────────────────────────────────────────────────────
 function authRequired(req, res, next) {
   const token = req.headers['authorization']?.split(' ')[1];
   if (!token) return res.status(401).json({ error: 'No token' });
@@ -65,12 +55,12 @@ function authRequired(req, res, next) {
   }
 }
 
-// ── Routes ───────────────────────────────────────────────
+// ── Public Routes ────────────────────────────────────────────────────────────
 
 // Register a performer
 app.post('/api/register', (req, res) => {
-  const { name, email, phone, act } = req.body;
-  if (!name || !email || !phone || !act) {
+  const { name, phone, act } = req.body;
+  if (!name || !phone || !act) {
     return res.status(400).json({ error: 'All fields required' });
   }
   const validActs = ['Dance', 'Singing', 'Acting'];
@@ -79,13 +69,12 @@ app.post('/api/register', (req, res) => {
   }
 
   try {
-    const wb = getWorkbook();
-    const ws = wb.Sheets['Registrations'];
-    const regId = getNextId(ws);
+    const regId = generateRegId();
     const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
-    xlsx.utils.sheet_add_aoa(ws, [[regId, name, email, phone, act, timestamp]], { origin: -1 });
-    xlsx.writeFile(wb, EXCEL_FILE);
+    db.prepare(
+      'INSERT INTO registrations (reg_id, name, phone, act, registered_at) VALUES (?, ?, ?, ?, ?)'
+    ).run(regId, name.trim(), phone.trim(), act, timestamp);
 
     res.json({ success: true, registrationId: regId });
   } catch (err) {
@@ -93,6 +82,8 @@ app.post('/api/register', (req, res) => {
     res.status(500).json({ error: 'Registration failed' });
   }
 });
+
+// ── Admin Routes ─────────────────────────────────────────────────────────────
 
 // Admin login
 app.post('/api/admin/login', (req, res) => {
@@ -104,31 +95,47 @@ app.post('/api/admin/login', (req, res) => {
   res.json({ token });
 });
 
-// Get all registrations (admin only)
+// Get all registrations
 app.get('/api/admin/registrations', authRequired, (req, res) => {
-  const wb = getWorkbook();
-  const ws = wb.Sheets['Registrations'];
-  const rows = xlsx.utils.sheet_to_json(ws, { header: 1 });
-  const [headers, ...data] = rows;
-  const registrations = data.map(row => ({
-    id: row[0], name: row[1], email: row[2],
-    phone: row[3], act: row[4], timestamp: row[5]
-  }));
+  const registrations = db.prepare(
+    'SELECT * FROM registrations ORDER BY id DESC'
+  ).all();
   res.json({ registrations, total: registrations.length });
 });
 
-// Download Excel (admin only)
-app.get('/api/admin/download', authRequired, (req, res) => {
-  if (!fs.existsSync(EXCEL_FILE)) {
-    return res.status(404).json({ error: 'No data yet' });
+// Delete a registration
+app.delete('/api/admin/registrations/:regId', authRequired, (req, res) => {
+  const { regId } = req.params;
+  const result = db.prepare('DELETE FROM registrations WHERE reg_id = ?').run(regId);
+  if (result.changes === 0) {
+    return res.status(404).json({ error: 'Registration not found' });
   }
-  res.download(EXCEL_FILE, 'bollywood-day-registrations.xlsx');
+  res.json({ success: true });
 });
 
-// ── Start server ─────────────────────────────────────────
+// Download Excel
+app.get('/api/admin/download', authRequired, (req, res) => {
+  const registrations = db.prepare('SELECT * FROM registrations ORDER BY id ASC').all();
+
+  const wb = xlsx.utils.book_new();
+  const wsData = [
+    ['Registration ID', 'Full Name', 'Phone', 'Act', 'Registered At'],
+    ...registrations.map(r => [r.reg_id, r.name, r.phone, r.act, r.registered_at])
+  ];
+  const ws = xlsx.utils.aoa_to_sheet(wsData);
+  ws['!cols'] = [{ wch: 16 }, { wch: 28 }, { wch: 18 }, { wch: 12 }, { wch: 26 }];
+  xlsx.utils.book_append_sheet(wb, ws, 'Registrations');
+
+  const buffer = xlsx.write(wb, { type: 'buffer', bookType: 'xlsx' });
+  res.setHeader('Content-Disposition', 'attachment; filename="bollywood-day-registrations.xlsx"');
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  res.send(buffer);
+});
+
+// ── Start ────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`\n🎬 Bollywood Day Registration Server running at http://localhost:${PORT}`);
-  console.log(`🔐 Admin panel: http://localhost:${PORT}/admin.html`);
-  console.log(`📊 Excel file: ${EXCEL_FILE}\n`);
+  console.log(`\n🎬 Bollywood Day Server → http://localhost:${PORT}`);
+  console.log(`🔐 Admin panel       → http://localhost:${PORT}/admin.html`);
+  console.log(`🗄️  Database          → ${path.join(DATA_DIR, 'registrations.db')}\n`);
 });

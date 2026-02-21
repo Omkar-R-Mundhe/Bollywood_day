@@ -16,12 +16,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-     "start": "node server.js"
+    "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "xlsx": "^0.18.5",
     "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2"
+    "better-sqlite3": "^12.6.2",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "xlsx": "^0.18.5"
   }
 }
