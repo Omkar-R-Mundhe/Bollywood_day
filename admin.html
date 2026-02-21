@@ -309,7 +309,6 @@
         <td>${escHtml(r.name || '—')}</td>
         <td>${escHtml(r.phone || '—')}</td>
         <td><span class="act-chip act-${r.act}">${r.act || '—'}</span></td>
-        <td style="color:rgba(255,255,255,0.35);font-size:0.78rem">${r.registered_at || '—'}</td>
         <td>
           <button class="btn-delete" onclick="openDeleteModal('${r.reg_id}', '${escHtml(r.name)}', this)">
             🗑 Delete
@@ -322,7 +321,7 @@
         <thead>
           <tr>
             <th>Reg ID</th><th>Name</th><th>Phone</th>
-            <th>Act</th><th>Registered At</th><th>Action</th>
+            <th>Act</th><th>Action</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
